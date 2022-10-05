@@ -160,7 +160,7 @@ export class EventsService {
     async getFutureEventWithWorkshops() {
         const currentTime = new Date();
         return await Event.findAll({
-            group:['Event.id'],
+            group:['Event.id','workshops.id'],
             having: Sequelize.literal(`(select count(*) from workshop where workshop.eventId = Event.id  and workshop.start >= '${currentTime.toISOString()}') > 0`),
             include: Workshop,
         });
